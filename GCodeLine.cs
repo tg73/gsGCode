@@ -61,8 +61,9 @@ namespace gs
 		public LType type;
 		public string orig_string;
 
-		public int N;       // N number of line
-		public int code;    // G or M code
+		public int N;        // N number of line
+		public int code;     // G or M code
+		public int? subcode; // Sub code of G or M code, such as '3' in Prusa-specific M862.3
 		public GCodeParam[] parameters;      // arguments/parameters
 
 		public string comment;
@@ -94,6 +95,7 @@ namespace gs
 			clone.orig_string = this.orig_string;
 			clone.N = this.N;
 			clone.code = this.code;
+			clone.subcode = this.subcode;
 			if ( this.parameters != null ) {
 				clone.parameters = new GCodeParam[this.parameters.Length];
 				for (int i = 0; i < this.parameters.Length; ++i )

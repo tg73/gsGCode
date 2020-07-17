@@ -53,9 +53,10 @@ namespace gs
 		/// <summary>
 		/// Open a G code line. Use AppendXParameter to add more info
 		/// </summary>
-		public virtual GCodeBuilder BeginGLine(int Gcode, string comment = null) {
+		public virtual GCodeBuilder BeginGLine(int Gcode, string comment = null, int? subcode = null) {
 			begin_new_line(GCodeLine.LType.GCode);
 			next_line.code = Gcode;
+			next_line.subcode = subcode;
 			if ( comment != null )
 				next_line.comment = comment;
 			return this;
@@ -64,9 +65,10 @@ namespace gs
 		/// <summary>
 		/// Open a M code line. Use AppendXParameter to add more info
 		/// </summary>
-		public virtual GCodeBuilder BeginMLine(int Mcode, string comment = null) {
+		public virtual GCodeBuilder BeginMLine(int Mcode, string comment = null, int? subcode = null) {
 			begin_new_line(GCodeLine.LType.MCode);
 			next_line.code = Mcode;
+			next_line.subcode = subcode;
 			if ( comment != null )
 				next_line.comment = comment;
 			return this;

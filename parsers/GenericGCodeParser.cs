@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Transactions;
 
 namespace gs
 {
@@ -94,17 +95,26 @@ namespace gs
 				eType = GCodeLine.LType.MCode;
 
 			GCodeLine l = new GCodeLine(nLineNum, eType);
-			l.orig_string = line;
-
-			l.N = int.Parse(tokens[0].Substring(1));
+			l.orig_string = line;			
 
 			// [TODO] comments
 
 			if (eType == GCodeLine.LType.UnknownCode) {
-				if (tokens.Length > 1)
+                l.N = int.Parse(tokens[0].Substring(1));
+                if (tokens.Length > 1)
 					l.parameters = parse_parameters(tokens, 1);
 			} else {
-				l.code = int.Parse(tokens[0].Substring(1));
+                var subcodePos = tokens[0].IndexOf('.');
+                if (subcodePos == -1)
+                {
+                    l.code = int.Parse(tokens[0].Substring(1));
+                }
+                else
+                {
+                    l.code = int.Parse(tokens[0].Substring(1, subcodePos - 1));
+                    l.subcode = int.Parse(tokens[0].Substring(subcodePos + 1));
+                }
+                l.N = l.code;
 				if (tokens.Length > 1)
 					l.parameters = parse_parameters(tokens, 1);
 			}

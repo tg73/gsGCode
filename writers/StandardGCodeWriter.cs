@@ -57,6 +57,8 @@ namespace gs
 			}
 
 			b.Append(line.code);
+			if (line.subcode.HasValue)
+				b.Append('.').Append(line.subcode.Value);
 			b.Append(' ');
 
 			if ( line.parameters != null ) {
